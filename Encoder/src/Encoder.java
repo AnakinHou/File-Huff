@@ -17,12 +17,14 @@ public class Encoder {
     static int size;
     
     public static void main(String[] args) {
-        System.out.println("正在处理音频生成图像……");
+        System.out.println("正在处理源文件生成图像……");
         size = getPicSize(ORIGIN_SOUND_PATH);
         createPic(size);
         getBi();
         fillBi(ORIGIN_SOUND_PATH);
+        long s = System.currentTimeMillis();
         drawPic();
+        System.out.println(System.currentTimeMillis() - s);
         System.out.println("图像生成完毕！");
     }
     
