@@ -1,7 +1,6 @@
 package top.lucency.utils;
 
 import javafx.animation.Interpolator;
-import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
@@ -33,26 +32,6 @@ public class AnimationUtil {
         translateTransition.setToY(toY);
         translateTransition.setCycleCount(cycleCount);
         translateTransition.play();
-    }
-    
-    /**
-     * 旋转动画
-     *
-     * @param node  节点
-     * @param time  持续时间
-     * @param delay 延时
-     * @param from  开始角度
-     * @param to    结束角度
-     */
-    public static RotateTransition rotate(Node node, double time, double delay, double from, double to) {
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(time), node);
-        rotateTransition.setInterpolator(Interpolator.LINEAR);
-        rotateTransition.setDelay(Duration.seconds(delay));
-        rotateTransition.setFromAngle(from);
-        rotateTransition.setToAngle(to);
-        rotateTransition.setCycleCount(2);
-        rotateTransition.play();
-        return rotateTransition;
     }
     
 }

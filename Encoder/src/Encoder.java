@@ -2,55 +2,56 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Objects;
 
 /**
  * @author 86181
  */
 public class Encoder {
     
-    public static final String ORIGIN_SOUND_PATH = "src/0.aac";
+    /**
+     * 加密原文件路径
+     */
+    public static final String ORIGIN_FILE_PATH = "src/0.ncm";
     
-    public static final String PIC_PATH = "C:\\Users\\86181\\Desktop\\out.png";
-    
+    /**
+     * 画笔
+     */
     static BufferedImage bi;
     
+    static long drawStart = System.currentTimeMillis();
+    
+    /**
+     * 文件总字节长度
+     */
     static int size;
     
     public static void main(String[] args) {
-        System.out.println("正在处理源文件生成图像……");
-        size = getPicSize(ORIGIN_SOUND_PATH);
-        createPic(size);
+        System.out.println("正在加密文件");
+        size = getPicInfo(new File(ORIGIN_FILE_PATH));
         getBi();
-        fillBi(ORIGIN_SOUND_PATH);
-        long s = System.currentTimeMillis();
-        drawPic();
-        System.out.println(System.currentTimeMillis() - s);
-        System.out.println("图像生成完毕！");
+        analysisRgb();
+        Compress.compress(Compress.transferBytes(Objects.requireNonNull(getPicBytes())));
+        System.out.println("文件生成完毕！");
     }
     
     /**
-     * 创建默认图片
+     * 获得文件字节总长度以及后缀名
      *
-     * @param size 图片大小
-     */
-    public static void createPic(int size) {
-        BufferedImage bufferedImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
-        try {
-            ImageIO.write(bufferedImage, "png", new File(PIC_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * 获得文件字节总长度
-     *
-     * @param filePath 文件路径
      * @return 字节总长度
      */
-    public static int getPicSize(String filePath) {
-        try (FileInputStream fis = new FileInputStream(new File(filePath))) {
-            return (int) Math.ceil(Math.sqrt(fis.readAllBytes().length * 2));
+    public static int getPicInfo(File pic) {
+        try (FileInputStream fis = new FileInputStream(pic)) {
+            String name = pic.getName();
+            String suffix = name.substring(name.lastIndexOf(".") + 1);
+            if (suffix.length() > 10) {
+                System.out.println("文件后缀超过十个字符，不符合加密条件！");
+                System.exit(0);
+            } else {
+                suffix = " ".repeat(10 - suffix.length()) + suffix;
+            }
+            Compress.header.setSuffix(suffix);
+            return (int) Math.ceil(Math.sqrt(fis.readAllBytes().length));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,60 +63,28 @@ public class Encoder {
      */
     public static void getBi() {
         try {
-            bi = ImageIO.read(new File(PIC_PATH));
+            bi = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     /**
-     * 填充 bi 指定位置颜色
-     *
-     * @param path 文件路径
+     * 分析 rgb 填充进画笔
      */
-    public static void fillBi(String path) {
-        try (FileInputStream fis = new FileInputStream(new File(path))) {
+    public static void analysisRgb() {
+        try (FileInputStream fis = new FileInputStream(new File(ORIGIN_FILE_PATH))) {
             byte[] tmpB = new byte[1024];
-            // 像素计数
-            int count = 0;
+            // 字节计数
+            int counts = 0;
             while (fis.read(tmpB) != -1) {
-                // 生成每个字节的像素
                 for (byte b : tmpB) {
-                    String binary = binary(b);
-                    // 半个字节作为一个像素，因此一个字节占横向两个像素
-                    int left = Integer.parseInt(binary.substring(0, 4));
-                    int right = Integer.parseInt(binary.substring(4, 8));
-                    
-                    // 构建一个字节的两个像素 rgb
-                    int r = 0;
-                    int leftG = (left & 0xFF00) >> 3;
-                    int leftB = left & 0xFF;
-                    int leftRgb = new Color(r, leftG, leftB).getRGB();
-                    
-                    int rightG = (right & 0xFF00) >> 3;
-                    int rightB = right & 0xFF;
-                    int rightRgb = new Color(r, rightG, rightB).getRGB();
-                    
-                    // 获得一个字节的两个像素坐标
-                    int leftX = count % size;
-                    int leftY = count / size;
-                    
-                    int rightX = leftX + 1;
-                    int rightY = leftY;
-                    
-                    // 像素 X 轴越界
-                    if (rightX > size - 1) {
-                        rightX = 0;
-                        rightY += 1;
-                    }
-                    if (leftX > size - 1) {
-                        leftX = 0;
-                        leftY += 1;
-                    }
-                    
-                    bi.setRGB(leftX, leftY, leftRgb);
-                    bi.setRGB(rightX, rightY, rightRgb);
-                    count += 2;
+                    int binary = Integer.parseInt(byte2Binary(b));
+                    int red = (binary >> 16) & 0xff;
+                    int green = (binary >> 8) & 0xff;
+                    int blue = binary & 0xff;
+                    setBi(counts % size, counts / size, new Color(red, green, blue).getRGB());
+                    counts++;
                 }
             }
         } catch (IOException e) {
@@ -124,14 +93,36 @@ public class Encoder {
     }
     
     /**
+     * 设置画笔
+     *
+     * @param x   x
+     * @param y   y
+     * @param rgb rgb
+     */
+    public static void setBi(int x, int y, int rgb) {
+        if (x > size - 1) {
+            x = 0;
+            y++;
+        }
+        if (y > size - 1) {
+            return;
+        }
+        bi.setRGB(x, y, rgb);
+    }
+    
+    /**
      * 绘图
      */
-    public static void drawPic() {
+    public static byte[] getPicBytes() {
         try {
-            ImageIO.write(bi, "png", new File(PIC_PATH));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bi, "png", bos);
+            System.out.println("加密耗时：" + (System.currentTimeMillis() - drawStart));
+            return bos.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
     
     /**
@@ -139,7 +130,7 @@ public class Encoder {
      *
      * @return 转换后的字符串
      */
-    public static String binary(byte b) {
+    public static String byte2Binary(byte b) {
         return Integer.toBinaryString((b & 0xFF) + 0x100).substring(1);
     }
     

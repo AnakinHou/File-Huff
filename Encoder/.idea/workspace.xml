@@ -24,9 +24,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Decoder" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\86181\Desktop\Encoder\src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\86181\Desktop\Encoder\src" />
     </key>
@@ -76,6 +79,25 @@
       <workItem from="1595672862796" duration="8000" />
       <workItem from="1595673144746" duration="8000" />
       <workItem from="1595673368147" duration="1778000" />
+      <workItem from="1596195577608" duration="2198000" />
+      <workItem from="1596198270784" duration="11342000" />
+      <workItem from="1596240989660" duration="29934000" />
+      <workItem from="1596324686192" duration="21483000" />
+      <workItem from="1596357549739" duration="11687000" />
+      <workItem from="1596371615393" duration="670000" />
+      <workItem from="1596373358488" duration="2644000" />
+      <workItem from="1596376323388" duration="308000" />
+      <workItem from="1596378552138" duration="2721000" />
+      <workItem from="1596417307042" duration="7080000" />
+      <workItem from="1596424944284" duration="2350000" />
+      <workItem from="1596454024236" duration="11000" />
+      <workItem from="1596457097498" duration="400000" />
+      <workItem from="1596458022447" duration="261000" />
+      <workItem from="1596459683484" duration="1883000" />
+      <workItem from="1596462484564" duration="997000" />
+      <workItem from="1596503844892" duration="1719000" />
+      <workItem from="1596507510750" duration="1174000" />
+      <workItem from="1596513512964" duration="50000" />
     </task>
     <servers />
   </component>
@@ -83,25 +105,37 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1595673429177">
+    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1596461566711">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595673429177" />
-    <state width="1493" height="277" key="GridCell.Tab.0.bottom" timestamp="1595675316329">
+    <state x="223" y="70" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1596461566711" />
+    <state x="574" y="105" key="#com.intellij.ide.util.MemberChooser" timestamp="1596371743749">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="277" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595675316329" />
-    <state width="1493" height="277" key="GridCell.Tab.0.center" timestamp="1595675316329">
+    <state x="574" y="105" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1596371743749" />
+    <state x="507" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1596280968338">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="277" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595675316329" />
-    <state width="1493" height="277" key="GridCell.Tab.0.left" timestamp="1595675316329">
+    <state x="507" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1596280968338" />
+    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1596513559759">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="277" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595675316329" />
-    <state width="1493" height="277" key="GridCell.Tab.0.right" timestamp="1595675316329">
+    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1596513559759" />
+    <state width="1493" height="241" key="GridCell.Tab.0.bottom" timestamp="1596513562897">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="277" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595675316329" />
+    <state width="1493" height="241" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596513562897" />
+    <state width="1493" height="241" key="GridCell.Tab.0.center" timestamp="1596513562897">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="241" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596513562897" />
+    <state width="1493" height="241" key="GridCell.Tab.0.left" timestamp="1596513562896">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="241" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596513562896" />
+    <state width="1493" height="241" key="GridCell.Tab.0.right" timestamp="1596513562897">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="241" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596513562897" />
   </component>
 </project>
